@@ -27,8 +27,8 @@ impl BlockHeader {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Block {
     header: BlockHeader,
-    transactions: Vec<String>,
-    block_hash: String
+    transactions: Vec<String>
+    // block_hash: String
 }
 
 impl Block {
