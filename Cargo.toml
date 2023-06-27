@@ -9,3 +9,4 @@ edition = "2021"
 serde = {version = "1.0.164" , features = ["derive"]}
 sha2 = "0.10.7"
 walkdir = "2"
+actix-web = "4"
