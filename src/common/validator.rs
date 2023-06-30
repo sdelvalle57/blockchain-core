@@ -18,7 +18,6 @@ pub fn validate_signature(message: &Message) -> Result<(), io::Error> {
         return Ok(())
     }
     Err(io::Error::new(io::ErrorKind::InvalidData, "Invalid Signature"))
-    
 }
 
 fn eth_message(message: &String) -> [u8; 32] {
