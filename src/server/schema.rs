@@ -11,11 +11,11 @@ struct RpcCall {
     message: String,
     signature: String,
 }
-impl TryFrom for RpcCall {
-    fn try_from(value: T) -> Result<Self, Self::Error> {
+// impl TryFrom for RpcCall {
+//     fn try_from(value: T) -> Result<Self, Self::Error> {
         
-    }
-}
+//     }
+// }
 
 #[derive(GraphQLObject)]
 #[graphql(description = "A humanoid creature in the Star Wars universe")]
@@ -76,7 +76,7 @@ impl MutationRoot {
     }
     fn init_new_blockchain(data: RpcCall) -> FieldResult<BlockchainInitiated> {
         Ok(BlockchainInitiated {
-            accounts: data.message,
+            accounts: vec![data.message],
             values: vec::Vec::new(),
         })
     }

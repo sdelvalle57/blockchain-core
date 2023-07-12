@@ -1,6 +1,6 @@
-
-use actix_web::{web, App, HttpResponse, HttpServer, Responder};
+use actix_cors::Cors;
 use actix_web::web::Data;
+use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use std::{io, sync::Arc};
 
 mod handler;
@@ -20,7 +20,13 @@ pub async fn start_server() -> io::Result<()> {
     log::info!("GraphiQL playground: http://localhost:7878/graphiql");
 
     HttpServer::new(move || {
+        let cors = Cors::default()
+            .allow_any_origin()
+            .allow_any_method()
+            .allow_any_header()
+            .supports_credentials();
         App::new()
+            .wrap(cors)
             .app_data(Data::from(schema.clone()))
             .service(handler::hello)
             .service(handler::echo)
@@ -34,4 +40,3 @@ pub async fn start_server() -> io::Result<()> {
     .run()
     .await
 }
-
