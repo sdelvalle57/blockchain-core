@@ -5,4 +5,4 @@ pub struct Transaction {
     value: u128,
     timestamp: u128,
     nonce: u128
-}   
+}       
