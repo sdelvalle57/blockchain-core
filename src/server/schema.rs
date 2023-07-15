@@ -75,6 +75,14 @@ pub struct MutationRoot;
 
 #[juniper::graphql_object]
 impl MutationRoot {
+    fn create_human(new_human: NewHuman) -> FieldResult<Human> {
+        Ok(Human {
+            id: "1234".to_owned(),
+            name: new_human.name,
+            appears_in: new_human.appears_in,
+            home_planet: new_human.home_planet,
+        })
+    }
     fn init_new_blockchain(data: RpcCall) -> FieldResult<BlockchainInitiated> {
         match data.message_to_vec() {
             Ok(accounts) => {
