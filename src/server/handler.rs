@@ -1,7 +1,7 @@
 use actix_web::{get, post, HttpResponse, Responder, web, route};
 use juniper::http::GraphQLRequest;
 use juniper::http::graphiql::graphiql_source;
-use serde::{Deserialize};
+use serde::Deserialize;
 use serde_json;
 use actix_web_lab::respond::Html;
 
