@@ -1,14 +1,11 @@
 use actix_cors::Cors;
 use actix_web::web::Data;
-use actix_web::{web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{App, HttpServer};
 use std::{io, sync::Arc};
 
 mod handler;
 mod schema;
-
-async fn manual_hello() -> impl Responder {
-    HttpResponse::Ok().body("Hey there!")
-}
+mod rpc_call;
 
 #[actix_web::main]
 pub async fn start_server() -> io::Result<()> {
@@ -28,11 +25,8 @@ pub async fn start_server() -> io::Result<()> {
         App::new()
             .wrap(cors)
             .app_data(Data::from(schema.clone()))
-            .service(handler::hello)
-            .service(handler::echo)
             .service(handler::graphql)
             .service(handler::graphql_playground)
-            .route("/hey", web::get().to(manual_hello))
     })
     .workers(5)
     .bind(("127.0.0.1", 7878))
