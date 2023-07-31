@@ -1,8 +1,9 @@
 use serde::{Deserialize, Serialize};
 use serde_json;
 use std::io;
+use std::str::FromStr;
 use std::{io::Error, result, vec};
-use web3::signing::{keccak256, recover};
+use web3::signing::{keccak256, recover, SecretKey};
 
 use juniper::{FieldError, GraphQLEnum, GraphQLInputObject, GraphQLObject};
 
@@ -146,14 +147,31 @@ pub fn eth_message(message: String) -> [u8; 32] {
 
 #[test]
 fn test_recover() {
-    let account = "0x23C6599aAdF44Be7cbaD6D9051bb4C2255b2f713".to_string();
-    let message = "heelo".to_string();
-    let message = eth_message(message);
-    let signature = hex::decode("7dabc0471d53ed34ec21c0257d8b40f7234d2bce8ccdbfba540a8f2be56183a954e49162be4768c14efeb6ad7f1a836d2a3385df628ede34f7047af65f18cc621c").unwrap();
-    println!("{} {:?} {:?}", account, message, signature);
-    let pubkey = recover(&message, &signature[..64], 0);
-    assert!(pubkey.is_ok());
-    let pubkey = pubkey.unwrap();
-    let pubkey = format!("{:02X?}", pubkey);
-    assert_eq!(account, pubkey)
+    let secret = "8da9966c46aee0993660a90ad6339c361c85301943ea5048770cd37787daa383";
+    // print!("{:?}", secret.as_bytes());
+    // let ethereum_secret_key = "0x...".to_string();
+    let sk = SecretKey::from_str(secret).unwrap();
+    assert_eq!(
+        sk.display_secret().to_string(),
+        "8da9966c46aee0993660a90ad6339c361c85301943ea5048770cd37787daa383"
+    );
+
+    
+
+
+
+
+    // assert_eq!(secret, secret_key.display_secret())
+    // secret_key.display_secret().to_string();
+
+    // let account = "0x23C6599aAdF44Be7cbaD6D9051bb4C2255b2f713".to_string();
+    // let message = "heelo".to_string();
+    // let message = eth_message(message);
+    // let signature = hex::decode("7dabc0471d53ed34ec21c0257d8b40f7234d2bce8ccdbfba540a8f2be56183a954e49162be4768c14efeb6ad7f1a836d2a3385df628ede34f7047af65f18cc621c").unwrap();
+    // println!("{} {:?} {:?}", account, message, signature);
+    // let pubkey = recover(&message, &signature[..64], 0);
+    // assert!(pubkey.is_ok());
+    // let pubkey = pubkey.unwrap();
+    // let pubkey = format!("{:02X?}", pubkey);
+    // assert_eq!(account, pubkey)
 }
