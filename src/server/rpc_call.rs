@@ -43,7 +43,6 @@ impl RpcCall {
         };
         let signature = signature.unwrap();
 
-        //TODO: message validation is not working, probably message needs to be arrayfy before recovering
         let recovery_id = signature[64] as i32 - 27;
         let pub_key = recover(&eth_message, &signature[..64], recovery_id).unwrap();
         let pub_key = format!("{:02X?}", pub_key);
@@ -71,6 +70,12 @@ impl TryInto<BlockchainInitiated> for RpcCall {
                 let chain = self.chain_id.try_into()?;
 
                 self.validate_signature()?;
+                //TODO: 
+                //add genesys configuration, blocktime, alloc, chainId
+                //build genesys transactions in transactions.rs
+                //hash transactions, build merkle
+                //build block
+                //build state
                 Ok(BlockchainInitiated {
                     accounts,
                     values: vec::Vec::new(),
